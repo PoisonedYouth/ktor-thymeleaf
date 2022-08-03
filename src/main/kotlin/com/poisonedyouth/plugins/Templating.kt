@@ -8,6 +8,7 @@ import io.ktor.server.application.call
 import io.ktor.server.application.install
 import io.ktor.server.request.receiveText
 import io.ktor.server.response.respond
+import io.ktor.server.response.respondRedirect
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
@@ -35,7 +36,7 @@ fun Application.configureTemplating() {
         }
         post("/new") {
             DataHolder.customerList.add(ObjectMapping.mapResponseToCustomer(call.receiveText()))
-            call.respond(ThymeleafContent("index", mapOf("customerList" to DataHolder.customerList)))
+            call.respondRedirect("/main", false)
         }
     }
 }

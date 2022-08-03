@@ -4,7 +4,7 @@ import java.time.LocalDate
 
 object DataHolder {
 
-    val customerList = listOf(
+    val customerList = mutableListOf(
         Customer(
             firstName = "John",
             lastName = "Doe",

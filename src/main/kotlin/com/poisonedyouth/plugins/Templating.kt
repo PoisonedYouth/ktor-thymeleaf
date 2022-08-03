@@ -1,13 +1,20 @@
 package com.poisonedyouth.plugins
 
+import com.poisonedyouth.CustomerData
 import com.poisonedyouth.DataHolder
+import com.poisonedyouth.ObjectMapping
+import io.ktor.server.application.Application
+import io.ktor.server.application.call
+import io.ktor.server.application.install
+import io.ktor.server.request.receiveText
+import io.ktor.server.response.respond
+import io.ktor.server.routing.get
+import io.ktor.server.routing.post
+import io.ktor.server.routing.routing
 import io.ktor.server.thymeleaf.Thymeleaf
 import io.ktor.server.thymeleaf.ThymeleafContent
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver
-import io.ktor.server.application.*
-import io.ktor.server.response.*
-import io.ktor.server.request.*
-import io.ktor.server.routing.*
+
 
 fun Application.configureTemplating() {
     install(Thymeleaf) {
@@ -19,7 +26,15 @@ fun Application.configureTemplating() {
     }
 
     routing {
-        get("/html-thymeleaf") {
+        get("/main") {
+            call.respond(ThymeleafContent("index", mapOf("customerList" to DataHolder.customerList)))
+        }
+
+        get("/new") {
+            call.respond(ThymeleafContent("newcustomer", mapOf("test" to CustomerData())))
+        }
+        post("/new") {
+            DataHolder.customerList.add(ObjectMapping.mapResponseToCustomer(call.receiveText()))
             call.respond(ThymeleafContent("index", mapOf("customerList" to DataHolder.customerList)))
         }
     }

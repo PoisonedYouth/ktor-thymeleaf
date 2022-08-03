@@ -1,24 +1,25 @@
-<!DOCTYPE html >
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Customer</title>
+<head th:include="fragments/layout :: headerFragment">
+    <title id="pageTitle">Customer List</title>
 </head>
 <body>
-    <table>
+<div class="container">
+    <a type="button" class="btn btn-primary" th:href="@{new}">New Customer</a>
+</div>
+<div class="container">
+    <table class="table">
         <thead>
-            <td>CustomerId</td>
-            <td>Firstname</td>
-            <td>LastName</td>
-            <td>Birthdate</td>
-            <td>Street</td>
-            <td>Street Number</td>
-            <td>Zip Code</td>
-            <td>City</td>
+        <th scope="col">CustomerId</th>
+        <th scope="col">Firstname</th>
+        <th scope="col">LastName</th>
+        <th scope="col">Birthdate</th>
+        <th scope="col">Street</th>
+        <th scope="col">Street Number</th>
+        <th scope="col">Zip Code</th>
+        <th scope="col">City</th>
         </thead>
         <tbody>
         <tr th:each="customer : ${customerList}">
-            <td th:text="${customer.customerId}"></td>
+            <th scope="row" th:text="${customer.customerId}"></th>
             <td th:text="${customer.firstName}"></td>
             <td th:text="${customer.lastName}"></td>
             <td th:text="${customer.birthdate}"></td>
@@ -29,5 +30,6 @@
         </tr>
         </tbody>
     </table>
+</div>
 </body>
 </html>

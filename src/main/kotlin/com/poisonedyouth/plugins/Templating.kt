@@ -29,22 +29,21 @@ fun Application.configureTemplating() {
     }
 
     routing {
-        get("main") {
+        get("/"){
             call.respond(ThymeleafContent("index", mapOf("customerList" to DataHolder.customerList)))
         }
-
         get("new") {
             call.respond(ThymeleafContent("newcustomer", mapOf("customer" to CustomerData())))
         }
         post("new") {
             DataHolder.customerList.add(ObjectMapping.mapResponseToCustomer(call.receiveText()))
-            call.respondRedirect("/main", false)
+            call.respondRedirect("/", false)
         }
         post("edit") {
             val customer = ObjectMapping.mapResponseToCustomer(call.receiveText())
             DataHolder.customerList.removeIf { it.customerId == customer.customerId }
             DataHolder.customerList.add(customer)
-            call.respondRedirect("/main", false)
+            call.respondRedirect("/", false)
         }
         get("edit/{customerId}") {
             val path = call.request.path()
@@ -70,7 +69,7 @@ fun Application.configureTemplating() {
                 }
             if (customer != null) {
                 DataHolder.customerList.removeIf { it.customerId == customer.customerId }
-                call.respondRedirect("/main", false)
+                call.respondRedirect("/", false)
             }
         }
     }

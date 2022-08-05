@@ -1,7 +1,6 @@
 package com.poisonedyouth
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import kotlin.random.Random
 import java.time.LocalDate
 
 object ObjectMapping {
@@ -15,7 +14,7 @@ object ObjectMapping {
         val customerDto = objectMapper.convertValue(newMap, CustomerData::class.java)
 
         return Customer(
-            customerId = Random.nextLong(11111, 99999),
+            customerId = customerDto.customerId,
             firstName = customerDto.firstName,
             lastName = customerDto.lastName,
             birthdate = LocalDate.parse(customerDto.birthdate),
@@ -27,4 +26,15 @@ object ObjectMapping {
             )
         )
     }
+
+    fun mapCustomerToCustomerData(customer: Customer) = CustomerData(
+        customerId = customer.customerId,
+        firstName = customer.firstName,
+        lastName = customer.lastName,
+        birthdate = customer.birthdate.toString(),
+        street = customer.address.street,
+        streetNumber = customer.address.streetNumber,
+        zipCode = customer.address.zipCode,
+        city = customer.address.city
+    )
 }

@@ -1,10 +1,15 @@
 <head th:include="fragments/layout :: headerFragment">
-    <title id="pageTitle">New Customer</title>
+    <title id="pageTitle">Edit Customer</title>
 </head>
 <body>
 <div class="container">
     <h3 class="text-center">Add New Customer</h3>
-    <form th:action="@{~/new}" th:object="${customer}" method="post">
+    <form th:action="@{~/edit}" th:object="${customer}" method="post">
+        <div class="mb-3">
+            <label for="customerId" class="form-label">CustomerId</label>
+            <input name="customerId" class="form-control-plaintext" type="text" id="customerId"  readonly
+                   th:value="*{customerId}">
+        </div>
         <div class="mb-3">
             <label for="firstName" class="form-label">Firstname</label>
             <input name="firstName" class="form-control" type="text" id="firstName" placeholder="Firstname"
@@ -18,11 +23,12 @@
         <div class="mb-3">
             <label for="birthdate" class="form-label">Birthdate</label>
             <input name="birthdate" class="form-control" type="date" id="birthdate" placeholder="Birthdate"
-                   th:value="*{birthdate}">
+                   th:value="*{birthDate}">
         </div>
         <div class="mb-3">
             <label for="street" class="form-label">Street</label>
-            <input name="street" class="form-control" type="text" id="street" placeholder="Street" th:value="*{street}">
+            <input name="street" class="form-control" type="text" id="street" placeholder="Street"
+                   th:value="*{street}">
         </div>
         <div class="mb-3">
             <label for="streetNumber" class="form-label">Street Number</label>
@@ -36,7 +42,8 @@
         </div>
         <div class="mb-3">
             <label for="city" class="form-label">City</label>
-            <input name="city" class="form-control" type="text" id="city" placeholder="City" th:value="*{city}">
+            <input name="city" class="form-control" type="text" id="city" placeholder="City"
+                   th:value="*{city}">
         </div>
 
         <button type="submit" class="btn btn-primary">Save</button>

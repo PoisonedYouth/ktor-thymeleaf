@@ -15,6 +15,7 @@
         <th scope="col">Street Number</th>
         <th scope="col">Zip Code</th>
         <th scope="col">City</th>
+        <th scope="col">Actions</th>
         </thead>
         <tbody>
         <tr th:each="customer : ${customerList}">
@@ -26,6 +27,7 @@
             <td th:text="${customer.address.streetNumber}"></td>
             <td th:text="${customer.address.zipCode}"></td>
             <td th:text="${customer.address.city}"></td>
+            <td><a th:href="@{'edit/'+${customer.customerId}}" class="btn btn-primary">Edit</a></td>
         </tr>
         </tbody>
     </table>

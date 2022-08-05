@@ -1,7 +1,10 @@
 package com.poisonedyouth
 
+import kotlin.random.Random
+import kotlin.random.Random.Default
+
 data class CustomerData(
-    var customerId: Long = 0,
+    var customerId: Long = Random.nextLong(11111,99999),
     var firstName: String = "",
     var lastName: String = "",
     var birthdate: String = "",

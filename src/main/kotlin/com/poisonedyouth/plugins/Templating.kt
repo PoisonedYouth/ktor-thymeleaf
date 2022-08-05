@@ -6,6 +6,7 @@ import com.poisonedyouth.ObjectMapping
 import io.ktor.server.application.Application
 import io.ktor.server.application.call
 import io.ktor.server.application.install
+import io.ktor.server.request.path
 import io.ktor.server.request.receiveText
 import io.ktor.server.response.respond
 import io.ktor.server.response.respondRedirect
@@ -27,16 +28,38 @@ fun Application.configureTemplating() {
     }
 
     routing {
-        get("/main") {
+        get("main") {
             call.respond(ThymeleafContent("index", mapOf("customerList" to DataHolder.customerList)))
         }
 
-        get("/new") {
-            call.respond(ThymeleafContent("newcustomer", mapOf("test" to CustomerData())))
+        get("new") {
+            call.respond(ThymeleafContent("newcustomer", mapOf("customer" to CustomerData())))
         }
-        post("/new") {
+        post("new") {
             DataHolder.customerList.add(ObjectMapping.mapResponseToCustomer(call.receiveText()))
             call.respondRedirect("/main", false)
+        }
+        post("edit") {
+            val customer = ObjectMapping.mapResponseToCustomer(call.receiveText())
+            DataHolder.customerList.removeIf { it.customerId == customer.customerId }
+            DataHolder.customerList.add(customer)
+            call.respondRedirect("/main", false)
+        }
+        get("edit/{customerId}") {
+            val path = call.request.path()
+            val customer =
+                DataHolder.customerList.firstOrNull {
+                    it.customerId == path.substring(startIndex = path.lastIndexOf("/") + 1).toLong()
+                }
+            if (customer != null) {
+                call.respond(
+                    ThymeleafContent(
+                        "editcustomer", mapOf(
+                            "customer" to ObjectMapping.mapCustomerToCustomerData(customer)
+                        )
+                    )
+                )
+            }
         }
     }
 }

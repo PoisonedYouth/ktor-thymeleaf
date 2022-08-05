@@ -5,41 +5,7 @@
 <div class="container">
     <h3 class="text-center">Add New Customer</h3>
     <form th:action="@{~/new}" th:object="${customer}" method="post">
-        <div class="mb-3">
-            <label for="firstName" class="form-label">Firstname</label>
-            <input name="firstName" class="form-control" type="text" id="firstName" placeholder="Firstname"
-                   th:value="*{firstName}">
-        </div>
-        <div class="mb-3">
-            <label for="lastName" class="form-label">Lastname</label>
-            <input name="lastName" class="form-control" type="text" id="lastName" placeholder="Firstname"
-                   th:value="*{lastName}">
-        </div>
-        <div class="mb-3">
-            <label for="birthdate" class="form-label">Birthdate</label>
-            <input name="birthdate" class="form-control" type="date" id="birthdate" placeholder="Birthdate"
-                   th:value="*{birthdate}">
-        </div>
-        <div class="mb-3">
-            <label for="street" class="form-label">Street</label>
-            <input name="street" class="form-control" type="text" id="street" placeholder="Street" th:value="*{street}">
-        </div>
-        <div class="mb-3">
-            <label for="streetNumber" class="form-label">Street Number</label>
-            <input name="streetNumber" class="form-control" type="text" id="streetNumber" placeholder="Street Number"
-                   th:value="*{streetNumber}">
-        </div>
-        <div class="mb-3">
-            <label for="zipCode" class="form-label">Zip Code</label>
-            <input name="zipCode" class="form-control" type="text" id="zipCode" placeholder="Zip Code"
-                   th:value="*{zipCode}">
-        </div>
-        <div class="mb-3">
-            <label for="city" class="form-label">City</label>
-            <input name="city" class="form-control" type="text" id="city" placeholder="City" th:value="*{city}">
-        </div>
-
-        <button type="submit" class="btn btn-primary">Save</button>
+        <div th:include="fragments/form ::formFragment"></div>
     </form>
 </div>
 

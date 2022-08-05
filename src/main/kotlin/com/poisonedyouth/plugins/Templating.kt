@@ -10,6 +10,7 @@ import io.ktor.server.request.path
 import io.ktor.server.request.receiveText
 import io.ktor.server.response.respond
 import io.ktor.server.response.respondRedirect
+import io.ktor.server.routing.delete
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
@@ -59,6 +60,17 @@ fun Application.configureTemplating() {
                         )
                     )
                 )
+            }
+        }
+        get("delete/{customerId}") {
+            val path = call.request.path()
+            val customer =
+                DataHolder.customerList.firstOrNull {
+                    it.customerId == path.substring(startIndex = path.lastIndexOf("/") + 1).toLong()
+                }
+            if (customer != null) {
+                DataHolder.customerList.removeIf { it.customerId == customer.customerId }
+                call.respondRedirect("/main", false)
             }
         }
     }

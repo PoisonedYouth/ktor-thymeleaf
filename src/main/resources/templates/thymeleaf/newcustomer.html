@@ -4,8 +4,8 @@
 <body>
 <div class="container">
     <h3 class="text-center">Add New Customer</h3>
-    <form th:action="@{~/new}" th:object="${customer}" method="post">
-        <div th:include="fragments/form ::formFragment"></div>
+    <form th:replace="fragments/form ::formFragment(url=@{~/new}, object=${customer})">
+
     </form>
 </div>
 

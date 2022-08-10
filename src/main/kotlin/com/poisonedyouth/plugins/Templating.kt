@@ -46,11 +46,7 @@ fun Application.configureTemplating() {
             call.respondRedirect("/", false)
         }
         get("edit/{customerId}") {
-            val path = call.request.path()
-            val customer =
-                DataHolder.customerList.firstOrNull {
-                    it.customerId == path.substring(startIndex = path.lastIndexOf("/") + 1).toLong()
-                }
+            val customer = DataHolder.getCustomerByRequestPath(call.request.path())
             if (customer != null) {
                 call.respond(
                     ThymeleafContent(
@@ -62,11 +58,7 @@ fun Application.configureTemplating() {
             }
         }
         get("delete/{customerId}") {
-            val path = call.request.path()
-            val customer =
-                DataHolder.customerList.firstOrNull {
-                    it.customerId == path.substring(startIndex = path.lastIndexOf("/") + 1).toLong()
-                }
+            val customer =  DataHolder.getCustomerByRequestPath(call.request.path())
             if (customer != null) {
                 DataHolder.customerList.removeIf { it.customerId == customer.customerId }
                 call.respondRedirect("/", false)

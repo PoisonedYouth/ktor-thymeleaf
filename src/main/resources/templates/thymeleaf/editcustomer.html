@@ -4,14 +4,8 @@
 <body>
 <div class="container">
     <h3 class="text-center">Add New Customer</h3>
-    <form th:action="@{~/edit}" th:object="${customer}" method="post">
-        <div class="mb-3">
-            <label for="customerId" class="form-label">CustomerId</label>
-            <input name="customerId" class="form-control-plaintext" type="text" id="customerId"  readonly
-                   th:value="*{customerId}">
-        </div>
-        <div th:include="fragments/form ::formFragment"></div>
+    <form th:replace="fragments/form ::formFragment(url=@{~/edit}, object=${customer})">
+
     </form>
 </div>
-
 </body>

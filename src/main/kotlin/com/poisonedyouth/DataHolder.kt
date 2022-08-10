@@ -1,5 +1,7 @@
 package com.poisonedyouth
 
+import io.ktor.server.application.call
+import io.ktor.server.request.path
 import java.time.LocalDate
 
 object DataHolder {
@@ -30,4 +32,10 @@ object DataHolder {
             )
         )
     )
+
+    fun getCustomerByRequestPath(path: String): Customer? {
+        return customerList.firstOrNull {
+            it.customerId == path.substring(startIndex = path.lastIndexOf("/") + 1).toLong()
+        }
+    }
 }

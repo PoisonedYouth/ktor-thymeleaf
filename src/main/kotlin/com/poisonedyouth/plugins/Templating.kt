@@ -10,7 +10,6 @@ import io.ktor.server.request.path
 import io.ktor.server.request.receiveText
 import io.ktor.server.response.respond
 import io.ktor.server.response.respondRedirect
-import io.ktor.server.routing.delete
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
@@ -29,20 +28,19 @@ fun Application.configureTemplating() {
     }
 
     routing {
-        get("/"){
-            call.respond(ThymeleafContent("index", mapOf("customerList" to DataHolder.customerList)))
+        get("/") {
+            call.respond(ThymeleafContent("index", mapOf("customerList" to DataHolder.getCustomerList())))
         }
         get("new") {
             call.respond(ThymeleafContent("newcustomer", mapOf("customer" to CustomerData())))
         }
         post("new") {
-            DataHolder.customerList.add(ObjectMapping.mapResponseToCustomer(call.receiveText()))
+            DataHolder.addCustomer(ObjectMapping.mapResponseToCustomer(call.receiveText()))
             call.respondRedirect("/", false)
         }
         post("edit") {
             val customer = ObjectMapping.mapResponseToCustomer(call.receiveText())
-            DataHolder.customerList.removeIf { it.customerId == customer.customerId }
-            DataHolder.customerList.add(customer)
+            DataHolder.updateCustomer(customer)
             call.respondRedirect("/", false)
         }
         get("edit/{customerId}") {
@@ -58,9 +56,9 @@ fun Application.configureTemplating() {
             }
         }
         get("delete/{customerId}") {
-            val customer =  DataHolder.getCustomerByRequestPath(call.request.path())
+            val customer = DataHolder.getCustomerByRequestPath(call.request.path())
             if (customer != null) {
-                DataHolder.customerList.removeIf { it.customerId == customer.customerId }
+                DataHolder.removeCustomer(customer)
                 call.respondRedirect("/", false)
             }
         }

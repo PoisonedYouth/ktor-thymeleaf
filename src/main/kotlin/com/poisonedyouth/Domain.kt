@@ -11,6 +11,7 @@ data class Customer(
 )
 
 data class Address(
+    val id: Long,
     val street: String,
     val streetNumber: String,
     val zipCode: Int,

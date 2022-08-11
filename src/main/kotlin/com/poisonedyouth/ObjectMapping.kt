@@ -19,6 +19,7 @@ object ObjectMapping {
             lastName = customerDto.lastName,
             birthdate = LocalDate.parse(customerDto.birthdate),
             address = Address(
+                id = 0L,
                 street = customerDto.street,
                 streetNumber = customerDto.streetNumber,
                 zipCode = customerDto.zipCode,
